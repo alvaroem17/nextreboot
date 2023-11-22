@@ -1,0 +1,6 @@
+.listItem{
+    opacity: 1;
+}
+.listItem:hover{
+    opacity: 0.5;
+}
