@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import yleLogo from "./../../../public/img/yleLogo.jpeg";
 export default function Landing() {
   return (
-    <div className="container">
+    <div className="container" id="Inicio">
       <Typography variant="h1" className="title">
         ¿Quiénes somos?
       </Typography>

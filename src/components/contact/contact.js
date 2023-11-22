@@ -8,7 +8,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 export default function Contact() {
   return (
-    <div className="container">
+    <div className="container" id="Contáctanos">
       <Typography variant="h1" className="title">
         Contáctanos
       </Typography>

@@ -11,10 +11,10 @@ export default function Home() {
     <>
       <NavBar />
       <main className={styles.main}>
-        <Landing/>
-        <Location/>
-        <Schedule/>
-        <Contact/>
+          <Landing/>
+          <Location/>
+          <Schedule/>
+          <Contact/>
       </main>
       <Footer/>
     </>

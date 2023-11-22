@@ -3,7 +3,7 @@ import "./../../app/globals.css";
 import Typography from "@mui/material/Typography";
 export default function Location() {
   return (
-    <div className="container">
+    <div className="container" id="¿Dónde estamos?">
       <Typography variant="h1" className="title">
         ¿Dónde estamos?
       </Typography>

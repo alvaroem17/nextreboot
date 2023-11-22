@@ -8,7 +8,7 @@ export default function Schedule() {
     const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
 
   return (
-    <div className="container" id={styles.container}>
+    <div className={`${styles.container} container`} id="Horarios">
       <Typography variant="h1" className="title">
         Horarios
       </Typography>

@@ -20,6 +20,7 @@ import { useState } from 'react';
 
 import styles from './navbar.module.css'
 import { Menu, MenuItem } from '@mui/material';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 const navItems = ['Inicio', '¿Dónde estamos?', 'Horarios', 'Contáctanos'];
@@ -44,10 +45,12 @@ function NavBar(props) {
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor: '#210130', color: 'white', gap: '10px' }}>
       <List sx={{ display: 'flex', flexDirection: 'column',gap: '10px', backgroundColor: '#4A0266', alignItems: 'center'}}>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding sx={{ borderRadius: '10px', backgroundColor: '#210130', width: '90%'}} className={styles.listItem}>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
+          <ListItem key={item} disablePadding sx={{ borderRadius: '10px', backgroundColor: '#210130', width: '90%', display: 'flex', justifyContent: 'center'}} className={styles.listItem}>
+            <Link href={`#${item}`}>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -95,8 +98,12 @@ function NavBar(props) {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>Iniciar sesión</MenuItem>
-            <MenuItem onClick={handleClose}>Crear cuenta</MenuItem>
+            <Link href={'/Login'} className={styles.menuItem}>
+              <MenuItem onClick={handleClose}>Iniciar sesión</MenuItem>
+            </Link>
+            <Link href={'/Signup'} className={styles.menuItem}>
+              <MenuItem onClick={handleClose}>Crear cuenta</MenuItem>
+            </Link>
           </Menu>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
