@@ -6,6 +6,16 @@
     align-items: center;
 
 }
+
+.form{
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 70%;
+  width: 80%;
+}
+
 .loadingWrapper {
   outline: 999px solid white;
   height: 100vh;
