@@ -59,8 +59,8 @@ function NavBar(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: '#4A0266'}}>
-        <Toolbar>
+      <AppBar component="nav" sx={{ backgroundColor: '#4A0266'}} className={styles.nav}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -73,7 +73,7 @@ function NavBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
+            sx={{ display: { xs: 'block', sm: 'block' } }}
           >
             Ylenia Estévez
           </Typography>

@@ -4,3 +4,8 @@
 .listItem:hover{
     opacity: 0.5;
 }
+
+.nav{
+    position: fixed; 
+    top: 0;
+}
