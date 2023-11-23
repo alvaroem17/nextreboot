@@ -1,9 +1,9 @@
-
-export default function Location() {
+import Location from './../../../components/location/location';
+export default function LocationHome() {
     return (
       <>
         <main className="container">
-          Location Manager
+          <Location/>
         </main>
       </>
     )
