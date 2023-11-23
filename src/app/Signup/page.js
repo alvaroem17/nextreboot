@@ -16,9 +16,8 @@ export default function Login() {
           <TextField id="outlined-basic" label="Confirmar contraseña" variant="outlined"  type="password"/>
           <Box sx={{ display: 'flex', gap: '5px', justifyContent: 'end', marginTop: '1rem'}}>
             <Button variant="contained" sx={{ backgroundColor: '#AF0FEC', color:'white'}}>Aceptar</Button>
-            <Button variant="contained" color="error">Cancelar</Button>
-          </Box>
-            
+            <Button variant="contained" color="error" href="/">Cancelar</Button>
+          </Box>  
         </form>
       </main>
     </>

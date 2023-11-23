@@ -23,6 +23,7 @@ import { Menu, MenuItem } from '@mui/material';
 import Link from 'next/link';
 
 const drawerWidth = 240;
+
 const navItems = ['Inicio', '¿Dónde estamos?', 'Horarios', 'Contáctanos'];
 
 function NavBar(props) {
@@ -60,7 +61,7 @@ function NavBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       <CssBaseline />
       <AppBar component="nav" sx={{ backgroundColor: '#4A0266'}} className={styles.nav}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
