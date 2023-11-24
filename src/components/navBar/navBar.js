@@ -20,8 +20,10 @@ import { useState } from 'react';
 
 import styles from './navbar.module.css'
 import { Menu, MenuItem } from '@mui/material';
+import Link from 'next/link';
 
 const drawerWidth = 240;
+
 const navItems = ['Inicio', '¿Dónde estamos?', 'Horarios', 'Contáctanos'];
 
 function NavBar(props) {
@@ -44,10 +46,12 @@ function NavBar(props) {
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor: '#210130', color: 'white', gap: '10px' }}>
       <List sx={{ display: 'flex', flexDirection: 'column',gap: '10px', backgroundColor: '#4A0266', alignItems: 'center'}}>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding sx={{ borderRadius: '10px', backgroundColor: '#210130', width: '90%'}} className={styles.listItem}>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
+          <ListItem key={item} disablePadding sx={{ borderRadius: '10px', backgroundColor: '#210130', width: '90%', display: 'flex', justifyContent: 'center'}} className={styles.listItem}>
+            <Link href={`#${item}`}>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -57,10 +61,10 @@ function NavBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: '#4A0266'}}>
-        <Toolbar>
+      <AppBar component="nav" sx={{ backgroundColor: '#4A0266'}} className={styles.nav}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -73,7 +77,7 @@ function NavBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
+            sx={{ display: { xs: 'block', sm: 'block' } }}
           >
             Ylenia Estévez
           </Typography>
@@ -95,8 +99,12 @@ function NavBar(props) {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>Iniciar sesión</MenuItem>
-            <MenuItem onClick={handleClose}>Crear cuenta</MenuItem>
+            <Link href={'/Login'} className={styles.menuItem}>
+              <MenuItem onClick={handleClose}>Iniciar sesión</MenuItem>
+            </Link>
+            <Link href={'/Signup'} className={styles.menuItem}>
+              <MenuItem onClick={handleClose}>Crear cuenta</MenuItem>
+            </Link>
           </Menu>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>

@@ -1,0 +1,19 @@
+.listItem{
+    opacity: 1;
+}
+.listItem>a{
+    text-decoration: none;
+    color: white;
+}
+.listItem:hover{
+    opacity: 0.5;
+}
+
+.nav{
+    position: fixed; 
+    top: 0;
+}
+.menuItem{
+    text-decoration: none;
+    color: #4A0266;
+}

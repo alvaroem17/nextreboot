@@ -1,0 +1,14 @@
+#content{
+    display: grid;
+    place-items: center;
+    height: 85vh;
+}
+.button{
+    color: white;
+    min-width: 1rem;
+    width: 1rem;
+    height: 2rem;
+}
+.button:hover{
+    opacity: 0.6;
+}
