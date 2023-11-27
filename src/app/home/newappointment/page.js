@@ -10,10 +10,15 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import styles from "./appointments.module.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import SemanaDesplegable from "@/components/weeks/weeks";
 
 export default function Appointments() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
   const hours = ["8:30", "9:30", "10:30", "14:30", "15:30", "16:30", "17:30"];
+
+  const handleAppointment = () => {
+    
+  }
 /* aria-controls={open ? "demo-customized-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}*/
@@ -31,18 +36,7 @@ export default function Appointments() {
           >
             Horas disponibles
           </Typography>
-          <Button            
-            variant="contained"
-            disableElevation 
-            endIcon={<KeyboardArrowDownIcon />}
-            sx={{
-              backgroundColor: "#AF0FEC",
-              color: "white",
-              margin: "0",
-              height: "2rem",
-            }}>
-              Semana
-            </Button>
+          <SemanaDesplegable/>
         </Box>
         <Box sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
           {days.map((day) => {
@@ -58,7 +52,7 @@ export default function Appointments() {
                 <Card className={styles.card}>
                   <Typography variant="h5">{day}</Typography>
                   <Divider className={styles.divider} />
-                  {hours.map((hour) => {
+                  {hours.map((hour, i) => {
                     return (
                       <Box
                         sx={{
@@ -69,7 +63,7 @@ export default function Appointments() {
                         }}
                       >
                         <Typography variant="h6">{hour}</Typography>
-                        <Button variant="contained" className={styles.button}>
+                        <Button variant="contained" className={styles.button} onClick={(e) => handleAppointment()}>
                           <AddIcon />
                         </Button>
                       </Box>
