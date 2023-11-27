@@ -2,19 +2,24 @@
 import AuthNav from "@/components/authNav/authNav";
 import styles from "./login.module.css"
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createCookie } from "@/service/cookies";
 import { login } from "@/service/authService";
+import { AuthContext } from "@/context/authcontext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const {token, role, setToken, setRole} = useContext(AuthContext)
+
   const handleLogin = async () => {
     try {
       const signupResponse = await login({email, password})
       createCookie(signupResponse.token, signupResponse.customerId ? signupResponse.customerId : signupResponse.employeeId, signupResponse.customerId ? "customer" : "employee" )
-     //Do something with the response
+      setToken(signupResponse.token)
+      setRole(signupResponse.customerId ? "customer" : "employee")
+      //Do something with the response
     } catch (error) {
      //Handle the error
     }

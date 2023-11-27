@@ -2,9 +2,10 @@
 import AuthNav from "@/components/authNav/authNav";
 import { Box, TextField, Typography,Button } from "@mui/material";
 import styles from "./signup.module.css"
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { signup } from "@/service/authService";
 import { createCookie } from "@/service/cookies";
+import { AuthContext } from "@/context/authcontext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,11 +14,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");password
 
+  const {token, role, setToken, setRole} = useContext(AuthContext);
+
   const handleSignup = async () => {
     try {
       if (password !== confirmPassword) return alert("Passwords do not match");
       const signupResponse = await signup({email, name, phone, password})
       createCookie(signupResponse.token, signupResponse.customerId)
+      setToken(signupResponse.token)
+      setRole("customer")
      //Do something with the response
     } catch (error) {
      //Handle the error
