@@ -23,50 +23,48 @@ export default function Appointments() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
   const hours = ["8:30", "9:30", "10:30", "14:30", "15:30", "16:30", "17:30"];
 
-  const [semana, setSemana] = useState('');
+  const [week, setWeek] = useState('');
 
-    const obtenerSemanas = () => {
-        const hoy = new Date();
-        const diaSemana = hoy.getDay();
-        if(diaSemana !== 1){
-            const diff = diaSemana-1;
-            hoy.setDate(hoy.getDate()-diff)
+    const getWeeks = () => {
+        const today = new Date();
+        const weekDay = today.getDay();
+        if(weekDay !== 1){
+            const diff = weekDay-1;
+            today.setDate(today.getDate()-diff)
         }
-        let semanas = [];
+        let weeks = [];
 
         // Si hoy es antes del viernes, incluir la semana actual
-        if (diaSemana < 5) {
-            semanas.push(`${hoy.getDate()}/${hoy.getMonth()+1}/${hoy.getFullYear()}`);
+        if (weekDay < 5) {
+            weeks.push(`${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`);
         }
 
         // Obtener las próximas 4 semanas
         for (let i = 0; i < 4; i++) {
-            hoy.setDate(hoy.getDate() + 7);
-            semanas.push(`${hoy.getDate()}/${hoy.getMonth()+1}/${hoy.getFullYear()}`);
+            today.setDate(today.getDate() + 7);
+            weeks.push(`${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`);
         }
 
-        return semanas;
+        return weeks;
     };
 
-    const manejarCambio = (evento) => {
-        setSemana(evento.target.value);
+    const handleChange = (event) => {
+        setWeek(event.target.value);
     };
 
 
   const handleAppointment = (props) => {
     console.log(props);
-    const format = props.semana.split("/").reverse().join("-");
-    const semana = new Date(format)
-    const hora = props.hour.split(":")
+    const format = props.week.split("/").reverse().join("-");
+    const week = new Date(format)
+    const hour = props.hour.split(":")
     const day = props.i
-    semana.setDate(semana.getDate() + day);
-    semana.setUTCHours(hora[0],hora[1])
-    console.log(semana);
+    week.setDate(week.getDate() + day);
+    week.setUTCHours(hour[0],hour[1])
+    console.log(week);
   
   };
-  /* aria-controls={open ? "demo-customized-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}*/
+  
   return (
     <>
       <main className="container">
@@ -90,11 +88,11 @@ export default function Appointments() {
           </Typography>
           <FormControl sx={{ width: "40%" }}>
             <InputLabel> Semana </InputLabel>
-            <Select value={semana} label="Semana" id='semana' onChange={manejarCambio}>
-              {obtenerSemanas().map((semana, indice) => (
-                <MenuItem key={indice} value={semana}>
+            <Select value={week} label="Semana" id='semana' onChange={handleChange}>
+              {getWeeks().map((week, indice) => (
+                <MenuItem key={indice} value={week}>
                   {" "}
-                  {semana}{" "}
+                  {week}{" "}
                 </MenuItem>
               ))}
             </Select>
@@ -110,6 +108,7 @@ export default function Appointments() {
                   flexDirection: "column",
                   width: "47%",
                 }}
+                key={i}
               >
                 <Card className={styles.card}>
                   <Typography variant="h5">{day}</Typography>
@@ -129,7 +128,7 @@ export default function Appointments() {
                         <Button
                           variant="contained"
                           className={styles.button}
-                          onClick={() => handleAppointment({ hour, i, semana })}
+                          onClick={() => handleAppointment({ hour, i, week })}
                         >
                           <AddIcon />
                         </Button>
