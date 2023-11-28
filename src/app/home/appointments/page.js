@@ -31,7 +31,7 @@ export default function Appointments() {
           <Typography variant="h1" className="title">
             Mis citas
           </Typography>
-          {appointments && appointments.map((appointment, index) => {
+          {appointments && appointments.filter((appointment) => new Date(appointment.date) >= new Date()).map((appointment, index) => {
             const appoDate = appointment.date.split("T")[0].split("-").reverse().join("-")
             const time = appointment.date.split("T")[1].substr(0, 5)
 
