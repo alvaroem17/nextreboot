@@ -2,23 +2,22 @@
 import AuthNav from "@/components/authNav/authNav";
 import styles from "./login.module.css"
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState, useContext } from "react";
-import { createCookie } from "@/service/cookies";
+import { useState } from "react";
 import { login } from "@/service/authService";
-import { AuthContext } from "@/context/authcontext";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {token, role, setToken, setRole} = useContext(AuthContext)
-
+  const router = useRouter()
   const handleLogin = async () => {
     try {
       const signupResponse = await login({email, password})
-      createCookie(signupResponse.token, signupResponse.customerId ? signupResponse.customerId : signupResponse.employeeId, signupResponse.customerId ? "customer" : "employee" )
-      setToken(signupResponse.token)
-      setRole(signupResponse.customerId ? "customer" : "employee")
+      localStorage.setItem("token", signupResponse.token)
+      localStorage.setItem("userId", signupResponse.customerId ? signupResponse.customerId : signupResponse.employeeId)
+      localStorage.setItem("rol", signupResponse.customerId ? "customer" : "employee")
+      router.push(signupResponse.customerId ? "/home" : "/admin")
       //Do something with the response
     } catch (error) {
      //Handle the error
