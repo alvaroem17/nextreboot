@@ -22,7 +22,15 @@ export async function deleteAppointment(id) {
 export async function getAppoinmentsUnavailable(date) {
   try {
     const {data} = await api.get(`/appointments/forcustomers/${date}`)
-    console.log(data)
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function addAppointment(data) {
+  try {
+    const {data} = await api.post(`/customers/profile/appointments`, data)
     return data
   } catch (error) {
     console.error(error)
