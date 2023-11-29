@@ -1,70 +1,73 @@
 "use client";
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, Divider, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import styles from "./appointments.module.css";
-import {
-  useState
-} from 'react';
+import { useEffect, useState } from "react";
 
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
-} from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { getAppoinmentsUnavailable } from "@/service/customerService";
 
 export default function Appointments() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
   const hours = ["8:30", "9:30", "10:30", "14:30", "15:30", "16:30", "17:30"];
+  const [appointments, setAppointments] = useState([]);
+  //const [update, setUpdate] = useState(0)
 
-  const [week, setWeek] = useState('');
+  const [week, setWeek] = useState("");
 
-    const getWeeks = () => {
-        const today = new Date();
-        const weekDay = today.getDay();
-        if(weekDay !== 1){
-            const diff = weekDay-1;
-            today.setDate(today.getDate()-diff)
-        }
-        let weeks = [];
+  useEffect(() => {
+    allAppointments();
+  }, [week]);
 
-        // Si hoy es antes del viernes, incluir la semana actual
-        if (weekDay < 5) {
-            weeks.push(`${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`);
-        }
+  const allAppointments = async (token) => {
+    const response = await getAppoinmentsUnavailable(week.split("/").reverse().join("-"));
+    setAppointments(response);
 
-        // Obtener las próximas 4 semanas
-        for (let i = 0; i < 4; i++) {
-            today.setDate(today.getDate() + 7);
-            weeks.push(`${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`);
-        }
+  };
+  //console.log(week);
+  console.log(appointments);
 
-        return weeks;
-    };
+  const getWeeks = () => {
+    const today = new Date();
+    const weekDay = today.getDay();
+    if (weekDay !== 1) {
+      const diff = weekDay - 1;
+      today.setDate(today.getDate() - diff);
+    }
+    let weeks = [];
 
-    const handleChange = (event) => {
-        setWeek(event.target.value);
-    };
+    // Si hoy es antes del viernes, incluir la semana actual
+    if (weekDay < 5) {
+      weeks.push(
+        `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
+      );
+    }
 
+    // Obtener las próximas 4 semanas
+    for (let i = 0; i < 4; i++) {
+      today.setDate(today.getDate() + 7);
+      weeks.push(
+        `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
+      );
+    }
+    return weeks;
+  };
+
+  const handleChange = (event) => {
+    setWeek(event.target.value);
+  };
 
   const handleAppointment = (props) => {
     console.log(props);
     const format = props.week.split("/").reverse().join("-");
-    const week = new Date(format)
-    const hour = props.hour.split(":")
-    const day = props.i
+    const week = new Date(format);
+    const hour = props.hour.split(":");
+    const day = props.i;
     week.setDate(week.getDate() + day);
-    week.setUTCHours(hour[0],hour[1])
+    week.setUTCHours(hour[0], hour[1]);
     console.log(week);
-  
   };
-  
+
   return (
     <>
       <main className="container">
@@ -88,7 +91,12 @@ export default function Appointments() {
           </Typography>
           <FormControl sx={{ width: "40%" }}>
             <InputLabel> Semana </InputLabel>
-            <Select value={week} label="Semana" id='semana' onChange={handleChange}>
+            <Select
+              value={week}
+              label="Semana"
+              id="semana"
+              onChange={handleChange}
+            >
               {getWeeks().map((week, indice) => (
                 <MenuItem key={indice} value={week}>
                   {" "}
