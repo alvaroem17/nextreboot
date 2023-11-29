@@ -5,19 +5,19 @@ import styles from "./appointments.module.css";
 import { useEffect, useState } from "react";
 
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { getAppoinmentsUnavailable } from "@/service/customerService";
+import { addAppointment, getAppoinmentsUnavailable } from "@/service/customerService";
 
 export default function Appointments() {
   const [days,setDays] = useState([{ day: "Lunes"}, { day: "Martes"}, { day: "Miercoles"}, { day: "Jueves"}, { day: "Viernes"}]);
   const hours = ["8:30", "9:30", "10:30", "14:30", "15:30", "16:30", "17:30"];
   const [appointments, setAppointments] = useState([]);
-  //const [update, setUpdate] = useState(0)
+  const [update, setUpdate] = useState(0)
 
   const [week, setWeek] = useState("");
 
   useEffect(() => {
     allAppointments();
-  }, [week]);
+  }, [update,week]);
 
   const allAppointments = async () => {
     const response = await getAppoinmentsUnavailable(week.split("/").reverse().join("-"));
@@ -70,11 +70,16 @@ export default function Appointments() {
 
     };
 
-  const handleAppointment = (props) => {
+  const handleAppointment = async (props) => {
     const date = new Date(props.date);
     const hour = props.hour.split(":");
     date.setUTCHours(hour[0], hour[1]);
-    //console.log(date)
+    console.log(date)
+
+    const response = await addAppointment({date, description:'Manicura', duration: 60});
+    setUpdate(response);
+    console.log(response)
+
   };
 
   return (

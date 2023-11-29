@@ -11,7 +11,7 @@ export default function Appointments() {
   const [update, setUpdate] = useState(0)
   
   const handleDelete = async (id) => {
-    await deleteAppointment(token, id)
+    await deleteAppointment(id)
     setUpdate(update + 1)
   }
 
@@ -20,7 +20,7 @@ export default function Appointments() {
   }, [update])
 
   const allAppointments = async () => {
-    const response = await getAppointmentsById(token)
+    const response = await getAppointmentsById()
     setAppointments(response)
   }
   

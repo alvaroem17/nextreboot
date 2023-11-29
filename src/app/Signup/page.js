@@ -1,33 +1,34 @@
-'use client'
+
+  'use client'
 import AuthNav from "@/components/authNav/authNav";
 import { Box, TextField, Typography,Button } from "@mui/material";
 import styles from "./signup.module.css"
 import { useState,useContext } from "react";
-import { signup } from "@/service/authService";
-import { createCookie } from "@/service/cookies";
-import { AuthContext } from "@/context/authcontext";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");password
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const {token, role, setToken, setRole} = useContext(AuthContext);
+  const router = useRouter()
 
   const handleSignup = async () => {
     try {
       if (password !== confirmPassword) return alert("Passwords do not match");
       const signupResponse = await signup({email, name, phone, password})
-      createCookie(signupResponse.token, signupResponse.customerId)
-      setToken(signupResponse.token)
-      setRole("customer")
+      localStorage.setItem("token", signupResponse.token)
+      localStorage.setItem("userId", signupResponse.customerId ? signupResponse.customerId : signupResponse.employeeId)
+      localStorage.setItem("rol", signupResponse.customerId ? "customer" : "employee")
+      router.push(signupResponse.customerId ? "/home" : "/admin")
      //Do something with the response
     } catch (error) {
      //Handle the error
     }
   }
+
 
   return (
     <>

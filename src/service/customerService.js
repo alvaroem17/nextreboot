@@ -28,9 +28,9 @@ export async function getAppoinmentsUnavailable(date) {
   }
 }
 
-export async function addAppointment(data) {
+export async function addAppointment(datos) {
   try {
-    const {data} = await api.post(`/customers/profile/appointments`, data)
+    const {data} = await api.post(`/customers/profile/appointments`, datos)
     return data
   } catch (error) {
     console.error(error)
