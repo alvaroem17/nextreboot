@@ -5,7 +5,7 @@ import yleLogo from "./../../../public/img/yleLogo.jpeg";
 export default function Landing() {
   return (
     <div className="container" id="Inicio">
-      <Typography variant="h1" className="title">
+      <Typography variant="h1" sx={{ color: '#4A0266', fontSize: '2rem', textAlign: 'center', marginTop: '2rem' }}>
         ¿Quiénes somos?
       </Typography>
       <Image src={yleLogo} width={300} height={300} placeholder="blur" className="logo" alt="Ylenia Estévez Logo"/>

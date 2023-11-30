@@ -156,6 +156,7 @@ export default function Appointments() {
                           <Typography variant="h6">{hour}</Typography>
                           <Button
                             variant="contained"
+                            sx={{ backgroundColor: "#009A0F", color: "white" }}
                             className={styles.button}
                             onClick={() => handleAppointment({ hour: hour, date: day.value })}
                           >

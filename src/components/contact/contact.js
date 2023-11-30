@@ -9,7 +9,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 export default function Contact() {
   return (
     <div className="container" id="Contáctanos">
-      <Typography variant="h1" className="title">
+      <Typography variant="h1" sx={{ color: '#4A0266', fontSize: '2rem', textAlign: 'center' }}>
         Contáctanos
       </Typography>
       <Card className={styles.card}>

@@ -28,7 +28,7 @@ export default function Login() {
     <>
       <AuthNav />
       <main className={styles.main}>
-        <Typography variant="h1" className="title">Iniciar sesión</Typography>
+        <Typography variant="h1" sx={{ color: '#4A0266', fontSize: '2rem', textAlign: 'center' }}>Iniciar sesión</Typography>
         <form className={styles.form}>
           <TextField id="outlined-basic" label="Email" variant="outlined" type="email" onChange={(e) => setEmail(e.target.value)}/>
           <TextField id="outlined-basic" label="Contraseña" variant="outlined" type="password" onChange={(e) => setPassword(e.target.value)}/>

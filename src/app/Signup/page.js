@@ -34,7 +34,7 @@ export default function Login() {
     <>
       <AuthNav />
       <main className={styles.main}>
-        <Typography variant="h1" className="title">Crear cuenta</Typography>
+        <Typography variant="h1" sx={{ color: '#4A0266', fontSize: '2rem', textAlign: 'center' }}>Crear cuenta</Typography>
         <form className={styles.form}>
           <TextField id="outlined-basic" label="Email" variant="outlined" type="email" onChange={(e) => setEmail(e.target.value)}/>
           <TextField id="outlined-basic" label="Nombre" variant="outlined" type="text" onChange={(e) => setName(e.target.value)}/>

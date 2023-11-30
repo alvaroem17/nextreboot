@@ -26,7 +26,7 @@ const drawerWidth = 240;
 
 function NavBar(props) {
   const navItems = !localStorage.getItem('token') ? ['Inicio', '¿Dónde estamos?', 'Horarios', 'Contáctanos'] : (localStorage.getItem('rol') === "customer" ? ['¿Dónde estamos?', 'Mis reservas', 'Pedir cita'] : ['Clientes', 'Materiales', 'Proveedores', 'Reservas']);
-  const navItemRoutes = localStorage.getItem('rol') === "customer" ? ['location', 'appointments', 'newappointment'] : ['customers', 'inventory', 'suppliers', 'appointments']
+  const navItemRoutes = localStorage.getItem('rol') === "customer" ? ['location', 'appointments', 'newappointment'] : ['customers', 'inventories', 'suppliers', 'appointments']
 
   const router = useRouter()
 

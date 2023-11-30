@@ -6,7 +6,6 @@ import Stack from '@mui/material/Stack'
 import style from './id.module.css'
 
 export default function Page({ params }) {
-  if (isNaN(params.id)) return notFound();
 
   const cliente = {
     _id: 1,
@@ -16,6 +15,7 @@ export default function Page({ params }) {
     phone: 123456789,
   };
 
+  console.log(params)
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/admin">
       Admin
