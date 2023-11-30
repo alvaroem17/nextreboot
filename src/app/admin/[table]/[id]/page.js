@@ -1,21 +1,26 @@
+'use client'
 import { Box, Breadcrumbs, Button, Card, Divider, TextField, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack'
 import style from './id.module.css'
+import { useEffect, useState } from "react";
+import { getOne } from "@/service/adminService";
 
 export default function Page({ params }) {
+  const [elem, setElem] = useState() 
 
-  const cliente = {
-    _id: 1,
-    name: "pedro",
-    email: "pedro@pedro.com",
-    password: "pedro123",
-    phone: 123456789,
-  };
+  useEffect(() => {
+    getElem()
+  },[])
 
-  console.log(params)
+  const getElem = async ()=>{
+    const response = await getOne(params.table, params.id)
+    setElem(response)
+  }
+
+  console.log(elem)
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/admin">
       Admin
@@ -65,9 +70,11 @@ export default function Page({ params }) {
             <Box
               sx={{ display: "flex", flexDirection: "column",justifyContent: "space-between", gap: "1rem", padding: "0 2rem 1rem"}}
             >
-              <TextField label="Nombre" type="text" value={cliente.name}></TextField>
-              <TextField label="Email" type="email" value={cliente.email}></TextField>
-              <TextField label="Teléfono" type="tel" value={cliente.phone}></TextField>
+              {elem && Object.keys(elem).filter((key) => key !== "_id" && key !== "__v" && key !== "password").map((args, key) =>{
+                return <TextField key={key} label={args} type="text" value={elem[args]}/>
+              })
+              }
+              
             </Box>
             <Box sx={{ display: "flex", gap: "5px", justifyContent: "flex-end"}}>
               <Button

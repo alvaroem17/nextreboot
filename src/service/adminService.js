@@ -12,3 +12,12 @@ export async function getAll(table) {
     console.error(error)
   }
 }
+
+export async function getOne(table,id) {
+    try {
+      const {data} = await api.get(`/${table}/${id}`)
+      return data
+    } catch (error) {
+      console.error(error)
+    }
+  }
