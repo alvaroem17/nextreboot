@@ -15,9 +15,26 @@ export async function getAll(table) {
 
 export async function getOne(table,id) {
     try {
-      const {data} = await api.get(`/${table}/${id}`)
+      const {data} = await api.get(`/${table}/${id}`, {
+        headers: {
+          Authorization: localStorage.token,
+        }
+    })
       return data
     } catch (error) {
       console.error(error)
     }
   }
+
+export async function deleteOne(table,id){
+    try {
+        const {data} = await api.delete(`/${table}/${id}`, {
+            headers: {
+                Authorization: localStorage.token,
+              }
+        })
+        return data
+    } catch (error) {
+        console.error(error)
+    }
+}

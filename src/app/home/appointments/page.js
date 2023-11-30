@@ -6,7 +6,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteAppointment, getAppointmentsById } from "@/service/customerService";
 import { useEffect, useState } from "react";
 export default function Appointments() {
-  const token = localStorage.getItem("token")
   const [appointments, setAppointments] = useState([])
   const [update, setUpdate] = useState(0)
   
@@ -28,7 +27,7 @@ export default function Appointments() {
     <>
       <main className="container" id={style.content}>
         <Box sx={{ padding: "2rem 0", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-          <Typography variant="h1" className="title">
+          <Typography variant="h1" sx={{ color: '#4A0266', fontSize: '2rem', textAlign: 'center' }}>
             Mis citas
           </Typography>
           {appointments && appointments.filter((appointment) => new Date(appointment.date) >= new Date()).map((appointment, index) => {

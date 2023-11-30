@@ -5,6 +5,7 @@ import { Box, TextField, Typography,Button } from "@mui/material";
 import styles from "./signup.module.css"
 import { useState,useContext } from "react";
 import { useRouter } from "next/navigation";
+import { signup } from "@/service/authService";
 
 export default function Login() {
   const [email, setEmail] = useState("");
