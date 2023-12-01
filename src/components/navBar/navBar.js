@@ -90,7 +90,7 @@ function NavBar(props) {
           >
             Ylenia Estévez
           </Typography>
-          {localStorage.getItem('rol') === 'employee' ? null : <><IconButton
+          {localStorage?.token ? null : <><IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"

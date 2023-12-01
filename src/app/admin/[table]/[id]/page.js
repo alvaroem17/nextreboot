@@ -1,34 +1,58 @@
-'use client'
-import { Box, Breadcrumbs, Button, Card, Divider, TextField, Typography } from "@mui/material";
-import { notFound } from "next/navigation";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack'
-import style from './id.module.css'
+"use client";
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  Card,
+  Divider,
+  TextField,
+  Typography,
+} from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import style from "./id.module.css";
 import { useEffect, useState } from "react";
-import { getOne } from "@/service/adminService";
+import { getOne, updateOne } from "@/service/adminService";
+
+import EditIcon from "@mui/icons-material/Edit";
+import UndoIcon from "@mui/icons-material/Undo";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
-  const [elem, setElem] = useState() 
-  const [editedElem, setEditedElem] = useState({ ...elem });
+  const [elem, setElem] = useState();
+  const [edit, setEdit] = useState({});
+  const [modification, setModification] = useState({});
 
+  const router = useRouter();
 
   useEffect(() => {
-    getElem()
-  },[])
+    getElem();
+  }, []);
 
-  const getElem = async ()=>{
-    const response = await getOne(params.table, params.id)
-    setElem(response)
-  }
-
-  const handleChange = (campo, valor) => {
-    setEditedElem((prev) => ({
-      ...prev,
-      [campo]: valor,
-    }));
+  const getElem = async () => {
+    const response = await getOne(params.table, params.id);
+    setElem(response);
+    Object.keys(response).forEach((key) => {
+      edit[key] = false;
+    });
   };
 
+  const handleChange = (args, value) => {
+    modification[args] = value;
+    setModification({ ...modification });
+  };
+
+  const handleEdit = (props) => {
+    edit[props] = !edit[props];
+    edit[props] === false ? delete modification[props] : null;
+    setEdit({ ...edit });
+  };
+
+  const onSubmit = async () => {
+    await updateOne(params.table, params.id, modification);
+    router.back();
+  };
 
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/admin">
@@ -45,7 +69,7 @@ export default function Page({ params }) {
     <Typography key="3" color="text.primary">
       {params.id}
     </Typography>,
-  ]
+  ];
   return (
     <>
       <main className="container" id={style.content}>
@@ -57,14 +81,14 @@ export default function Page({ params }) {
               padding: "1rem",
             }}
           >
-          <Stack spacing={2}>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              {breadcrumbs}
-            </Breadcrumbs>
-          </Stack>
+            <Stack spacing={2}>
+              <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb"
+              >
+                {breadcrumbs}
+              </Breadcrumbs>
+            </Stack>
           </Box>
           <Divider sx={{ margin: "1rem" }} />
           <Box
@@ -77,24 +101,108 @@ export default function Page({ params }) {
             }}
           >
             <Box
-              sx={{ display: "flex", flexDirection: "column",justifyContent: "space-between", gap: "1rem", padding: "0 2rem 1rem"}}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                gap: "1rem",
+                padding: "0 0 1rem",
+              }}
             >
-              {elem && Object.keys(elem).filter((key) => key !== "_id" && key !== "__v" && key !== "password").map((args, key) =>{
-                if(args === "date"){
-                  console.log(elem[args])
-                  return (<>
-                          <TextField key={key} label={args} type="date" value={`${elem[args].slice(0,elem[args].indexOf("T"))}`} onChange={(e) => handleChange(args, e.target.value)}/>
-                          <TextField key={key} label="hour" type="time" value={`${elem[args].slice(elem[args].indexOf("T")+1,elem[args].lastIndexOf(":"))}` }onChange={(e) => handleChange(args+" hour", e.target.value)}/>
-                        </>)
-                }else if(args === "customer"){
-                  return <TextField key={key} label={args} type={"text"} disabled value={elem[args].name}/>
-                }
-                return <TextField key={key} label={args} type={"text"} value={elem[args]} onChange={(e) => handleChange(args, e.target.value)}/>
-              })
-              }
-              
+              {elem &&
+                Object.keys(elem)
+                  .filter(
+                    (key) =>
+                      key !== "_id" && key !== "__v" && key !== "password"
+                  )
+                  .map((args, key) => {
+                    if (args === "date") {
+                      return edit[args] ? (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <TextField
+                            key={key}
+                            label={args}
+                            type="datetime-local"
+                            onChange={(e) => handleChange(args, e.target.value)}
+                            InputLabelProps={{ shrink: true }}
+                          />
+                          <Button onClick={() => handleEdit(args)}>
+                            <UndoIcon />
+                          </Button>
+                        </Box>
+                      ) : (
+                        <>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Typography key={key}>
+                              {" "}
+                              {`${args}: ${elem[args].slice(
+                                0,
+                                elem[args].indexOf("T")
+                              )}`}
+                            </Typography>
+
+                            <Button onClick={() => handleEdit(args)}>
+                              <EditIcon />
+                            </Button>
+                          </Box>
+                          <Typography key={key}>{`time: ${elem[args].slice(
+                            elem[args].indexOf("T") + 1,
+                            elem[args].lastIndexOf(":")
+                          )}`}</Typography>
+                        </>
+                      );
+                    }
+                    return edit[args] ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <TextField
+                          key={key}
+                          label={args}
+                          type={"text"}
+                          onChange={(e) => handleChange(args, e.target.value)}
+                        />
+                        <Button onClick={() => handleEdit(args)}>
+                          <UndoIcon />
+                        </Button>
+                      </Box>
+                    ) : (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography
+                          key={key}
+                        >{`${args}: ${elem[args]}`}</Typography>
+                        <Button onClick={() => handleEdit(args)}>
+                          <EditIcon />
+                        </Button>
+                      </Box>
+                    );
+                  })}
             </Box>
-            <Box sx={{ display: "flex", gap: "5px", justifyContent: "flex-end"}}>
+            <Box
+              sx={{ display: "flex", gap: "5px", justifyContent: "flex-end" }}
+            >
               <Button
                 variant="contained"
                 sx={{ backgroundColor: "#EC0F0F", color: "white" }}
@@ -105,9 +213,7 @@ export default function Page({ params }) {
               <Button
                 variant="contained"
                 sx={{ backgroundColor: "#AF0FEC", color: "white" }}
-                onClick={() => {
-                  handleChange()
-                }}
+                onClick={() => onSubmit()}
               >
                 Aceptar
               </Button>
