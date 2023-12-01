@@ -17,16 +17,19 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-
 import styles from './navbar.module.css'
 import { Menu, MenuItem } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240;
 
-const navItems = ['Inicio', '¿Dónde estamos?', 'Horarios', 'Contáctanos'];
-
 function NavBar(props) {
+  const navItems = !localStorage.getItem('token') ? ['Inicio', '¿Dónde estamos?', 'Horarios', 'Contáctanos'] : (localStorage.getItem('rol') === "customer" ? ['¿Dónde estamos?', 'Mis reservas', 'Pedir cita'] : ['Clientes', 'Materiales', 'Proveedores', 'Reservas']);
+  const navItemRoutes = localStorage.getItem('rol') === "customer" ? ['location', 'appointments', 'newappointment'] : ['customers', 'inventories', 'suppliers', 'appointments']
+
+  const router = useRouter()
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(null);
@@ -42,18 +45,24 @@ function NavBar(props) {
     setMenuOpen(null);
   };
 
+  const handleLogOut = () => {
+    localStorage.clear();
+    router.push('/');
+  }
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor: '#210130', color: 'white', gap: '10px' }}>
       <List sx={{ display: 'flex', flexDirection: 'column',gap: '10px', backgroundColor: '#4A0266', alignItems: 'center'}}>
-        {navItems.map((item) => (
+        {navItems.map((item,i) => (
           <ListItem key={item} disablePadding sx={{ borderRadius: '10px', backgroundColor: '#210130', width: '90%', display: 'flex', justifyContent: 'center'}} className={styles.listItem}>
-            <Link href={`#${item}`}>
+            <Link href={localStorage.getItem('rol') === 'employee' ? `/admin/${navItemRoutes[i]}` : (localStorage.getItem('token') ? `/home/${navItemRoutes[i]}` : `#${item}`)}>
               <ListItemButton sx={{ textAlign: 'center' }}>
                 <ListItemText primary={item} />
               </ListItemButton>
             </Link>
           </ListItem>
         ))}
+      {localStorage.getItem('token') ? <Button variant='contained' sx={{backgroundColor: '#AF0FEC', position:'fixed', bottom: '20px'}} onClick={() => handleLogOut()}> Salir</Button> : null}
       </List>
     </Box>
   );
@@ -81,7 +90,7 @@ function NavBar(props) {
           >
             Ylenia Estévez
           </Typography>
-          <IconButton
+          {localStorage?.token ? null : <><IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
@@ -105,8 +114,8 @@ function NavBar(props) {
             <Link href={'/Signup'} className={styles.menuItem}>
               <MenuItem onClick={handleClose}>Crear cuenta</MenuItem>
             </Link>
-          </Menu>
-
+          </Menu></>
+          }
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>

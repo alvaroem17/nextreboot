@@ -9,7 +9,7 @@ export default function Schedule() {
 
   return (
     <div className={`${styles.container} container`} id="Horarios">
-      <Typography variant="h1" className="title">
+      <Typography variant="h1" sx={{ color: '#4A0266', fontSize: '2rem', textAlign: 'center' }}>
         Horarios
       </Typography>
       <Box sx={{ display: 'flex', gap: '5px'}}>
