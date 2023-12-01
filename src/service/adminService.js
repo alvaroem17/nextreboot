@@ -38,3 +38,16 @@ export async function deleteOne(table,id){
         console.error(error)
     }
 }
+
+export async function createOne(table, values){
+  try {
+      const {data} = await api.post(`/${table}`, values,{
+          headers: {
+              Authorization: localStorage.token,
+            }
+      })
+      return data
+  } catch (error) {
+      console.error(error)
+  }
+}
