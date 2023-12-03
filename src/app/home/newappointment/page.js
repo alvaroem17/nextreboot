@@ -74,11 +74,9 @@ export default function Appointments() {
     const date = new Date(props.date);
     const hour = props.hour.split(":");
     date.setUTCHours(hour[0], hour[1]);
-    console.log(date)
 
     const response = await addAppointment({date, description:'Manicura', duration: 60});
     setUpdate(response);
-    console.log(response)
 
   };
 
