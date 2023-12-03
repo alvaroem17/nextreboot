@@ -2,12 +2,14 @@ import api from "./config";
 
 export async function getAll(table) {
   try {
-    const { data } = await api.get(`/${table}`, {
-      headers: {
-        Authorization: localStorage.token,
-      },
-    });
-    return data;
+    if (window.localStorage !== undefined && window.localStorage.token) {
+      const { data } = await api.get(`/${table}`, {
+        headers: {
+          Authorization: localStorage.token,
+        },
+      });
+      return data;
+    }
   } catch (error) {
     console.error(error);
   }
@@ -15,12 +17,15 @@ export async function getAll(table) {
 
 export async function getOne(table, id) {
   try {
-    const { data } = await api.get(`/${table}/${id}`, {
-      headers: {
-        Authorization: localStorage.token,
-      },
-    });
-    return data;
+    if (window.localStorage !== undefined && window.localStorage.token) {
+      const { data } = await api.get(`/${table}/${id}`, {
+        headers: {
+          Authorization: localStorage.token,
+        },
+      });
+      return data;
+
+    }
   } catch (error) {
     console.error(error);
   }
@@ -28,12 +33,14 @@ export async function getOne(table, id) {
 
 export async function deleteOne(table, id) {
   try {
-    const { data } = await api.delete(`/${table}/${id}`, {
-      headers: {
-        Authorization: localStorage.token,
-      },
-    });
-    return data;
+    if (window.localStorage !== undefined && window.localStorage.token) {
+      const { data } = await api.delete(`/${table}/${id}`, {
+        headers: {
+          Authorization: localStorage.token,
+        },
+      });
+      return data;
+    }
   } catch (error) {
     console.error(error);
   }
@@ -41,12 +48,14 @@ export async function deleteOne(table, id) {
 
 export async function createOne(table, values) {
   try {
-    const { data } = await api.post(`/${table}`, values, {
-      headers: {
-        Authorization: localStorage.token,
-      },
-    });
-    return data;
+    if (window.localStorage !== undefined && window.localStorage.token) {
+      const { data } = await api.post(`/${table}`, values, {
+        headers: {
+          Authorization: localStorage.token,
+        },
+      });
+      return data;
+    }
   } catch (error) {
     console.error(error);
   }
@@ -54,13 +63,14 @@ export async function createOne(table, values) {
 
 export async function updateOne(table, id,values) {
   try {
-    const {data} = await api.put(`/${table}/${id}`, values, {
-      headers: {
-        Authorization: localStorage.token,
-      },
-    });
-    console.log(data)
-    return data;
+    if (window.localStorage !== undefined && window.localStorage.token) {
+      const {data} = await api.put(`/${table}/${id}`, values, {
+        headers: {
+          Authorization: localStorage.token,
+        },
+      });
+      return data;
+    }
   } catch (error) {
     console.error(error);
   }
